@@ -212,7 +212,7 @@ class PeminjamanBarangController extends Controller
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://127.0.0.1:8000/api/peminjamanalat/index',
+            CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/peminjamanalat/index',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -301,7 +301,7 @@ class PeminjamanBarangController extends Controller
         ];
 
         curl_setopt_array($client, [
-            CURLOPT_URL => 'http://127.0.0.1:8000/api/peminjamanalat/post',
+            CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/peminjamanalat/post',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => http_build_query($postData),
@@ -345,7 +345,7 @@ class PeminjamanBarangController extends Controller
         // Ambil data peminjaman dari API
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/peminjamanalat/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/peminjamanalat/{$id}",
             CURLOPT_RETURNTRANSFER => true,
         ]);
 
@@ -384,7 +384,7 @@ class PeminjamanBarangController extends Controller
 
     //     $client = curl_init();
     //     curl_setopt_array($client, [
-    //         CURLOPT_URL => "http://127.0.0.1:8000/api/peminjamanalat/{$id}",
+    //         CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/peminjamanalat/{$id}",
     //         CURLOPT_RETURNTRANSFER => true,
     //     ]);
 
@@ -423,7 +423,7 @@ class PeminjamanBarangController extends Controller
 
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/peminjamanalat/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/peminjamanalat/{$id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => http_build_query($postData),
@@ -452,7 +452,7 @@ class PeminjamanBarangController extends Controller
     {
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/peminjamanalat/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/peminjamanalat/{$id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "DELETE",
         ]);

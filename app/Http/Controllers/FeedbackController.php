@@ -30,7 +30,7 @@ class FeedbackController extends Controller
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://127.0.0.1:8000/api/feedback/index',
+            CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/feedback/index',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -75,7 +75,7 @@ class FeedbackController extends Controller
         ];
 
         curl_setopt_array($client, [
-            CURLOPT_URL => 'http://127.0.0.1:8000/api/feedback/post',
+            CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/feedback/post',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => http_build_query($postData),
@@ -115,7 +115,7 @@ class FeedbackController extends Controller
     {
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/feedback/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/feedback/{$id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "DELETE",
         ]);

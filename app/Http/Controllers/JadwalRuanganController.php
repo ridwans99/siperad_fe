@@ -454,7 +454,7 @@ class JadwalRuanganController extends Controller
 
         $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_URL => 'http://127.0.0.1:8000/api/jadwalruang/index',
+            CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/jadwalruang/index',
             CURLOPT_RETURNTRANSFER => true,
         ]);
         $response = curl_exec($curl);
@@ -484,7 +484,7 @@ class JadwalRuanganController extends Controller
 
         $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_URL => 'http://127.0.0.1:8000/api/lihat-jadwalruang/index',
+            CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/lihat-jadwalruang/index',
             CURLOPT_RETURNTRANSFER => true,
         ]);
         $response = curl_exec($curl);
@@ -590,7 +590,7 @@ class JadwalRuanganController extends Controller
 
     //     $curl = curl_init();
     //     curl_setopt_array($curl, [
-    //         CURLOPT_URL => 'http://127.0.0.1:8000/api/lihat/kalender?' . $queryParams,
+    //         CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/lihat/kalender?' . $queryParams,
     //         CURLOPT_RETURNTRANSFER => true,
     //     ]);
     //     $response = curl_exec($curl);
@@ -654,7 +654,7 @@ class JadwalRuanganController extends Controller
         ]);
 
         curl_setopt_array($curl, [
-            CURLOPT_URL => 'http://127.0.0.1:8000/api/jadwalruang/post',
+            CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/jadwalruang/post',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => http_build_query($postData),
@@ -676,7 +676,7 @@ class JadwalRuanganController extends Controller
     {
         $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/jadwalruang/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/jadwalruang/{$id}",
             CURLOPT_RETURNTRANSFER => true,
         ]);
         $response = curl_exec($curl);
@@ -725,7 +725,7 @@ class JadwalRuanganController extends Controller
         ]);
 
         curl_setopt_array($curl, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/jadwalruang/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/jadwalruang/{$id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => http_build_query($postData),
@@ -750,7 +750,7 @@ class JadwalRuanganController extends Controller
     {
         $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/jadwalruang/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/jadwalruang/{$id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => 'DELETE',
         ]);
@@ -772,7 +772,7 @@ class JadwalRuanganController extends Controller
         $curl = curl_init();
 
         curl_setopt_array($curl, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/jadwalruang/hapus-semua",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/jadwalruang/hapus-semua",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "DELETE",
             CURLOPT_HTTPHEADER => [

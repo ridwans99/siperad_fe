@@ -99,7 +99,7 @@ class AngkatanController extends Controller
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://127.0.0.1:8000/api/angkatan/index',
+            CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/angkatan/index',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -142,7 +142,7 @@ class AngkatanController extends Controller
         ];
 
         curl_setopt_array($client, [
-            CURLOPT_URL => 'http://127.0.0.1:8000/api/angkatan/post',
+            CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/angkatan/post',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => http_build_query($postData),
@@ -165,7 +165,7 @@ class AngkatanController extends Controller
     {
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/angkatan/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/angkatan/{$id}",
             CURLOPT_RETURNTRANSFER => true,
         ]);
 
@@ -194,7 +194,7 @@ class AngkatanController extends Controller
 
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/angkatan/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/angkatan/{$id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => http_build_query($postData),
@@ -220,7 +220,7 @@ class AngkatanController extends Controller
     {
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/angkatan/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/angkatan/{$id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "DELETE",
         ]);

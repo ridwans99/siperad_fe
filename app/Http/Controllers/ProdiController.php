@@ -106,7 +106,7 @@ class ProdiController extends Controller
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://127.0.0.1:8000/api/prodi/index',
+            CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/prodi/index',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -147,7 +147,7 @@ class ProdiController extends Controller
 
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => 'http://127.0.0.1:8000/api/prodi/post',
+            CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/prodi/post',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => http_build_query($postData),
@@ -170,7 +170,7 @@ class ProdiController extends Controller
     {
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/prodi/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/prodi/{$id}",
             CURLOPT_RETURNTRANSFER => true,
         ]);
 
@@ -199,7 +199,7 @@ class ProdiController extends Controller
 
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/prodi/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/prodi/{$id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => http_build_query($postData),
@@ -225,7 +225,7 @@ class ProdiController extends Controller
     {
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/prodi/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/prodi/{$id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "DELETE",
         ]);

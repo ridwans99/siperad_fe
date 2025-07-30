@@ -129,7 +129,7 @@ class NamaDosenController extends Controller
         confirmDelete($title, $text);
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => 'http://127.0.0.1:8000/api/dosen/index',
+            CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/dosen/index',
             CURLOPT_RETURNTRANSFER => true,
         ]);
 
@@ -155,7 +155,7 @@ class NamaDosenController extends Controller
     {
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => 'http://127.0.0.1:8000/api/dosen/index',
+            CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/dosen/index',
             CURLOPT_RETURNTRANSFER => true,
         ]);
 
@@ -183,7 +183,7 @@ class NamaDosenController extends Controller
 
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => 'http://127.0.0.1:8000/api/dosen/post',
+            CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/dosen/post',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => http_build_query($postData),
@@ -206,7 +206,7 @@ class NamaDosenController extends Controller
     {
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/dosen/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/dosen/{$id}",
             CURLOPT_RETURNTRANSFER => true,
         ]);
 
@@ -235,7 +235,7 @@ class NamaDosenController extends Controller
 
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/dosen/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/dosen/{$id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => http_build_query($postData),
@@ -261,7 +261,7 @@ class NamaDosenController extends Controller
     {
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/dosen/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/dosen/{$id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "DELETE",
         ]);
@@ -286,13 +286,13 @@ class NamaDosenController extends Controller
         ];
         $client = curl_init();
         // curl_setopt_array($client, [
-        //     CURLOPT_URL => 'http://127.0.0.1:8000/api/dosen/status',
+        //     CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/dosen/status',
         //     CURLOPT_RETURNTRANSFER => true,
         //     CURLOPT_POST => true,
         //     CURLOPT_POSTFIELDS => http_build_query($postData),
         // ]);
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/dosen/status",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/dosen/status",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => http_build_query($postData),

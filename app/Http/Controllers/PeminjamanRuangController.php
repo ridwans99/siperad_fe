@@ -401,7 +401,7 @@ class PeminjamanRuangController extends Controller
         $client = curl_init();
 
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/peminjamanruang/index",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/peminjamanruang/index",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -478,7 +478,7 @@ class PeminjamanRuangController extends Controller
 
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/peminjamanruang/post",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/peminjamanruang/post",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => http_build_query($postData),
@@ -522,7 +522,7 @@ class PeminjamanRuangController extends Controller
     {
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/peminjamanruang/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/peminjamanruang/{$id}",
             CURLOPT_RETURNTRANSFER => true,
         ]);
 
@@ -572,7 +572,7 @@ class PeminjamanRuangController extends Controller
 
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/peminjamanruang/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/peminjamanruang/{$id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => http_build_query($postData),
@@ -598,7 +598,7 @@ class PeminjamanRuangController extends Controller
     {
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/peminjamanruang/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/peminjamanruang/{$id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => 'DELETE',
         ]);

@@ -99,7 +99,7 @@ class JamController extends Controller
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://127.0.0.1:8000/api/jam/index',
+            CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/jam/index',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -141,7 +141,7 @@ class JamController extends Controller
 
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => 'http://127.0.0.1:8000/api/jam/post',
+            CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/jam/post',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => http_build_query($postData),
@@ -164,7 +164,7 @@ class JamController extends Controller
     {
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/jam/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/jam/{$id}",
             CURLOPT_RETURNTRANSFER => true,
         ]);
 
@@ -193,7 +193,7 @@ class JamController extends Controller
 
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/jam/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/jam/{$id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => http_build_query($postData),
@@ -219,7 +219,7 @@ class JamController extends Controller
     {
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "http://127.0.0.1:8000/api/jam/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/jam/{$id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "DELETE",
         ]);
