@@ -64,19 +64,39 @@ class BarangController extends Controller
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ));
 
         $response = curl_exec($curl);
         $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        // if ($response === false) {
+        //     $error = curl_error($curl);
+        //     dd("cURL Error: " . $error);
+        // }
         curl_close($curl);
 
-        if ($httpCode != 200) {
-            Alert::error('Gagal', 'Gagal mengambil data alat dari API');
-            return redirect()->back();
+        $data = [];
+        $message = null;
+
+        $decoded = json_decode($response, true);
+
+        if ($httpCode == 200 && is_array($decoded)) {
+            $data = $decoded;
+        } else {
+            $message = $decoded['message'] ?? 'Data tidak ditemukan.';
+            Alert::warning('Info', $message);
         }
 
-        // Decode JSON response jadi array PHP
-        $data = json_decode($response, true);
+
+        // if ($httpCode != 200) {
+        //     Alert::error('Gagal', 'Gagal mengambil data alat dari API');
+        //     return redirect()->back();
+        // }
+
+        // // Decode JSON response jadi array PHP
+        // $data = json_decode($response, true);
 
         if (auth()->user()->type == '1') {
             return view('admin/barang/index', [
@@ -136,15 +156,14 @@ class BarangController extends Controller
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => http_build_query($postData),
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
         $httpCode = curl_getinfo($client, CURLINFO_HTTP_CODE);
         curl_close($client);
-
-        Log::info('Pengguna berhasil menambahkan barang.');
-        // $userId = 123;
-        Log::info('Memproses pesanan untuk pengguna ID: ' . $httpCode);
 
         if ($httpCode == 201) {
             Alert::success('Berhasil', 'Barang Berhasil Ditambahkan');
@@ -170,11 +189,21 @@ class BarangController extends Controller
         curl_setopt_array($client, [
             CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/alat/{$id}",
             CURLOPT_RETURNTRANSFER => true,
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
         $httpCode = curl_getinfo($client, CURLINFO_HTTP_CODE);
         curl_close($client);
+
+        // if ($httpCode != 200) {
+        //     dd([
+        //         'http_code' => $httpCode,
+        //         'response' => $response
+        //     ]);
+        // }
 
         if ($httpCode != 200) {
             Alert::error('Error', 'Data tidak ditemukan');
@@ -214,9 +243,46 @@ class BarangController extends Controller
     //         ->with('success', 'Barang berhasil diubah!');
     // }
 
+    // yg ini kepake
+    // public function update(Request $request, $id)
+    // {
+    //     $postData = [
+    //         'nama_barang' => $request->nama_barang,
+    //         'deskripsi_barang' => $request->deskripsi_barang,
+    //         'status_barang' => $request->status_barang,
+    //         'stok' => $request->stok,
+    //     ];
+
+    //     $client = curl_init();
+    //     curl_setopt_array($client, [
+    //         CURLOPT_URL => "http://fmipa.unj.ac.id/siperad-be/api/alat/{$id}",
+    //         CURLOPT_RETURNTRANSFER => true,
+    //         CURLOPT_CUSTOMREQUEST => 'PUT',
+    //         CURLOPT_POSTFIELDS => http_build_query($postData),
+    //         CURLOPT_HTTPHEADER => [
+    //             'Content-Type: application/x-www-form-urlencoded',
+    //         ],
+    //         CURLOPT_SSL_VERIFYPEER => false,
+    //         CURLOPT_SSL_VERIFYHOST => false,
+    //     ]);
+
+    //     $response = curl_exec($client);
+    //     $httpCode = curl_getinfo($client, CURLINFO_HTTP_CODE);
+    //     curl_close($client);
+
+    //     if ($httpCode == 200) {
+    //         Alert::success('Berhasil', 'Barang Berhasil Diubah');
+    //         return redirect()->route('barang.index');
+    //     } else {
+    //         $error = json_decode($response, true);
+    //         return redirect()->back()->withErrors($error['errors'])->withInput();
+    //     }
+    // }
+
     public function update(Request $request, $id)
     {
         $postData = [
+            '_method' => 'PUT',
             'nama_barang' => $request->nama_barang,
             'deskripsi_barang' => $request->deskripsi_barang,
             'status_barang' => $request->status_barang,
@@ -225,49 +291,112 @@ class BarangController extends Controller
 
         $client = curl_init();
         curl_setopt_array($client, [
-            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/alat/{$id}",
+            CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/alat/{$id}", // gunakan HTTPS
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_CUSTOMREQUEST => 'POST', 
             CURLOPT_POSTFIELDS => http_build_query($postData),
             CURLOPT_HTTPHEADER => [
                 'Content-Type: application/x-www-form-urlencoded',
+                'Accept: application/json',
+                // 'Authorization: Bearer ' . $token, // aktifkan jika API membutuhkan autentikasi
             ],
+            
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
         $httpCode = curl_getinfo($client, CURLINFO_HTTP_CODE);
+
+        if (curl_errno($client)) {
+            $errorMsg = curl_error($client);
+            curl_close($client);
+            return redirect()->back()->withErrors(['curl_error' => $errorMsg])->withInput();
+        }
+
         curl_close($client);
 
-        if ($httpCode == 200) {
+        if (in_array($httpCode, [200, 202])) {
             Alert::success('Berhasil', 'Barang Berhasil Diubah');
             return redirect()->route('barang.index');
         } else {
             $error = json_decode($response, true);
-            return redirect()->back()->withErrors($error['errors'])->withInput();
+            return redirect()->back()
+                ->withErrors($error['errors'] ?? ['update' => 'Gagal memperbarui barang.'])
+                ->withInput();
         }
     }
 
     public function destroy($id)
     {
+        $postData = [
+            '_method' => 'DELETE',
+        ];
+
         $client = curl_init();
         curl_setopt_array($client, [
             CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/alat/{$id}",
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_CUSTOMREQUEST => "DELETE",
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => http_build_query($postData),
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/x-www-form-urlencoded',
+                'Accept: application/json',
+                // 'Authorization: Bearer ' . $token, // jika backend pakai auth
+            ],
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
         $httpCode = curl_getinfo($client, CURLINFO_HTTP_CODE);
+
+        if (curl_errno($client)) {
+            $errorMsg = curl_error($client);
+            curl_close($client);
+            return redirect()->route('barang.index')
+                ->withErrors(['curl_error' => $errorMsg]);
+        }
+
         curl_close($client);
 
-        if ($httpCode == 200) {
+        if (in_array($httpCode, [200, 202, 204])) {
             Alert::success('Berhasil', 'Barang Berhasil Dihapus');
         } else {
-            Alert::error('Gagal', 'Barang gagal dihapus');
+            $error = json_decode($response, true);
+            Alert::error('Gagal', $error['message'] ?? 'Barang gagal dihapus.');
         }
 
         return redirect()->route('barang.index');
     }
+
+
+    // yg ini kepake
+    // public function destroy($id)
+    // {
+    //     $client = curl_init();
+    //     curl_setopt_array($client, [
+    //         CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/alat/{$id}",
+    //         CURLOPT_RETURNTRANSFER => true,
+    //         CURLOPT_CUSTOMREQUEST => "DELETE",
+
+    //         CURLOPT_SSL_VERIFYPEER => false,
+    //         CURLOPT_SSL_VERIFYHOST => false,
+    //     ]);
+
+    //     $response = curl_exec($client);
+    //     $httpCode = curl_getinfo($client, CURLINFO_HTTP_CODE);
+    //     curl_close($client);
+
+    //     if ($httpCode == 200) {
+    //         Alert::success('Berhasil', 'Barang Berhasil Dihapus');
+    //     } else {
+    //         Alert::error('Gagal', 'Barang gagal dihapus');
+    //     }
+
+    //     return redirect()->route('barang.index');
+    // }
 
     // public function destroy($id)
     // {

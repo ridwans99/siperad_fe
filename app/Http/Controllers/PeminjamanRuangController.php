@@ -409,18 +409,34 @@ class PeminjamanRuangController extends Controller
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
         $httpCode = curl_getinfo($client, CURLINFO_HTTP_CODE);
         curl_close($client);
 
-        if ($httpCode != 200) {
-            Alert::error('Gagal', 'Gagal mengambil data peminjaman ruang dari API');
-            return redirect()->back();
+        $data = [];
+        $message = null;
+
+        $decoded = json_decode($response, true);
+
+        if ($httpCode == 200 && is_array($decoded)) {
+            $data = $decoded;
+        } else {
+            $message = $decoded['message'] ?? 'Data tidak ditemukan.';
+            Alert::warning('Info', $message);
         }
 
-        $data = json_decode($response, true);
+
+        // if ($httpCode != 200) {
+        //     Alert::error('Gagal', 'Gagal mengambil data peminjaman ruang dari API');
+        //     return redirect()->back();
+        // }
+
+        // $data = json_decode($response, true);
         // dd($data);
 
         if (auth()->user()->type == '1') {
@@ -482,6 +498,9 @@ class PeminjamanRuangController extends Controller
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => http_build_query($postData),
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
@@ -524,6 +543,9 @@ class PeminjamanRuangController extends Controller
         curl_setopt_array($client, [
             CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/peminjamanruang/{$id}",
             CURLOPT_RETURNTRANSFER => true,
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
@@ -559,6 +581,7 @@ class PeminjamanRuangController extends Controller
     public function update(Request $request, $id)
     {
         $postData = $request->only([
+            '_method' => 'PUT',
             'nama_peminjam',
             'tgl_peminjaman',
             'ruang_id',
@@ -574,11 +597,14 @@ class PeminjamanRuangController extends Controller
         curl_setopt_array($client, [
             CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/peminjamanruang/{$id}",
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => http_build_query($postData),
             CURLOPT_HTTPHEADER => [
                 'Content-Type: application/x-www-form-urlencoded',
             ],
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
@@ -596,11 +622,19 @@ class PeminjamanRuangController extends Controller
 
     public function destroy($id)
     {
+        $postData = [
+            '_method' => 'DELETE', // Override method DELETE
+        ];
+
         $client = curl_init();
         curl_setopt_array($client, [
             CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/peminjamanruang/{$id}",
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_CUSTOMREQUEST => 'DELETE',
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => http_build_query($postData),
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);

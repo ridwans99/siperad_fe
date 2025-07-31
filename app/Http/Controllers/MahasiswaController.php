@@ -137,18 +137,34 @@ class MahasiswaController extends Controller
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ));
 
         $response = curl_exec($curl);
         $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 
-        if ($httpCode != 200) {
-            Alert::error('Gagal', 'Gagal mengambil data mahasiswa dari API');
-            return redirect()->back();
+        $data = [];
+        $message = null;
+
+        $decoded = json_decode($response, true);
+
+        if ($httpCode == 200 && is_array($decoded)) {
+            $data = $decoded;
+        } else {
+            $message = $decoded['message'] ?? 'Data tidak ditemukan.';
+            Alert::warning('Info', $message);
         }
 
-        $data = json_decode($response, true);
+
+        // if ($httpCode != 200) {
+        //     Alert::error('Gagal', 'Gagal mengambil data mahasiswa dari API');
+        //     return redirect()->back();
+        // }
+
+        // $data = json_decode($response, true);
         // dd($data);
         return view('admin/mahasiswa/index', [
             'title' => 'Data Mahasiswa',
@@ -186,6 +202,9 @@ class MahasiswaController extends Controller
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => http_build_query($postData),
+            
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
@@ -207,6 +226,9 @@ class MahasiswaController extends Controller
         curl_setopt_array($client, [
             CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/mahasiswa/{$id}",
             CURLOPT_RETURNTRANSFER => true,
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
@@ -234,6 +256,7 @@ class MahasiswaController extends Controller
     public function update(Request $request, $id)
     {
         $postData = [
+            '_method' => 'PUT',
             'name' => $request->name,
             'username' => $request->username,
             'prodi_id' => $request->prodi_id,
@@ -245,11 +268,14 @@ class MahasiswaController extends Controller
         curl_setopt_array($client, [
             CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/mahasiswa/{$id}",
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => http_build_query($postData),
             CURLOPT_HTTPHEADER => [
                 'Content-Type: application/x-www-form-urlencoded',
             ],
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
@@ -267,11 +293,19 @@ class MahasiswaController extends Controller
 
     public function destroy($id)
     {
+        $postData = [
+            '_method' => 'DELETE', // Override method DELETE
+        ];
+        
         $client = curl_init();
         curl_setopt_array($client, [
             CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/mahasiswa/{$id}",
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_CUSTOMREQUEST => "DELETE",
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => http_build_query($postData),
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);

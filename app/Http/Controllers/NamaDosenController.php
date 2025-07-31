@@ -131,18 +131,40 @@ class NamaDosenController extends Controller
         curl_setopt_array($client, [
             CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/dosen/index',
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
         $httpCode = curl_getinfo($client, CURLINFO_HTTP_CODE);
         curl_close($client);
 
-        if ($httpCode != 200) {
-            Alert::error('Gagal', 'Gagal mengambil data dosen dari API');
-            return redirect()->back();
+        $data = [];
+        $message = null;
+
+        $decoded = json_decode($response, true);
+
+        if ($httpCode == 200 && is_array($decoded)) {
+            $data = $decoded;
+        } else {
+            $message = $decoded['message'] ?? 'Data tidak ditemukan.';
+            Alert::warning('Info', $message);
         }
 
-        $data = json_decode($response, true);
+
+        // if ($httpCode != 200) {
+        //     Alert::error('Gagal', 'Gagal mengambil data dosen dari API');
+        //     // return redirect()->back();
+        // }
+
+        // $data = json_decode($response, true);
         // dd($data);
 
         return view('admin/dosen/index', [
@@ -157,6 +179,9 @@ class NamaDosenController extends Controller
         curl_setopt_array($client, [
             CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/dosen/index',
             CURLOPT_RETURNTRANSFER => true,
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
@@ -187,6 +212,9 @@ class NamaDosenController extends Controller
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => http_build_query($postData),
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
@@ -208,6 +236,9 @@ class NamaDosenController extends Controller
         curl_setopt_array($client, [
             CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/dosen/{$id}",
             CURLOPT_RETURNTRANSFER => true,
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
@@ -230,6 +261,7 @@ class NamaDosenController extends Controller
     public function update(Request $request, $id)
     {
         $postData = [
+            '_method' => 'PUT',
             'nama_dosen' => $request->nama_dosen,
         ];
 
@@ -237,11 +269,14 @@ class NamaDosenController extends Controller
         curl_setopt_array($client, [
             CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/dosen/{$id}",
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => http_build_query($postData),
             CURLOPT_HTTPHEADER => [
                 'Content-Type: application/x-www-form-urlencoded',
             ],
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
@@ -259,11 +294,19 @@ class NamaDosenController extends Controller
 
     public function destroy($id)
     {
+        $postData = [
+            '_method' => 'DELETE', // Override method DELETE
+        ];
+
         $client = curl_init();
         curl_setopt_array($client, [
             CURLOPT_URL => "https://fmipa.unj.ac.id/siperad-be/api/dosen/{$id}",
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_CUSTOMREQUEST => "DELETE",
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => http_build_query($postData),
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
@@ -282,8 +325,10 @@ class NamaDosenController extends Controller
     public function ubahstatus(Request $request)
     {
         $postData = [
+            '_method' => 'PUT',
             'dosen_id' => $request->dosen_id,
         ];
+
         $client = curl_init();
         // curl_setopt_array($client, [
         //     CURLOPT_URL => 'https://fmipa.unj.ac.id/siperad-be/api/dosen/status',
@@ -299,6 +344,9 @@ class NamaDosenController extends Controller
             CURLOPT_HTTPHEADER => [
                 'Content-Type: application/x-www-form-urlencoded',
             ],
+
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         ]);
 
         $response = curl_exec($client);
